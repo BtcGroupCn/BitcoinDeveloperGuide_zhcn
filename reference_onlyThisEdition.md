@@ -1,5 +1,5 @@
+ï»¿
 
-
-# ²Î¿¼×ÊÁÏ
+# å‚è€ƒèµ„æ–™
 1. [Bitcoin Developer Guide](https://bitcoin.org/en/developer-guide#block-chain)
-2. [±ÈÌØ±Ò¿ª·¢Ö¸ÄÏ-Ä¿Â¼](http://8btc.com/article-1756-1.html)
+2. [æ¯”ç‰¹å¸å¼€å‘æŒ‡å—-ç›®å½•](http://8btc.com/article-1756-1.html)

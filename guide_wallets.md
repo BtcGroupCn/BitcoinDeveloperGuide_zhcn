@@ -1,26 +1,26 @@
-This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
+ï»¿This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
 
-[¶ÔÓ¦Ó¢ÎÄÎÄµµ](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_wallets.md)
+[å¯¹åº”è‹±æ–‡æ–‡æ¡£](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_wallets.md)
 
-# Ç®°ü
-±ÈÌØ±ÒµÄÇ®°ü¿ÉÒÔÓÃÀ´Ö¸Ò»¸öÇ®°ü³ÌĞò£¬Ò²¿ÉÒÔÊÇÒ»¸öÇ®°üÎÄ¼ş¡£Ç®°ü³ÌĞò´´½¨¹«Ô¿½ÓÊÕ±ÈÌØ±Ò£¬²¢Í¨¹ıÏàÓ¦µÄË½Ô¿»¨·ÑÕâĞ©±ÈÌØ±Ò¡£Ç®°üÎÄ¼şÎªÇ®°ü³ÌĞò±£´æ½»Ò×Ïà¹ØµÄË½Ô¿ºÍÆäËûĞÅÏ¢¡£
+# é’±åŒ…
+æ¯”ç‰¹å¸çš„é’±åŒ…å¯ä»¥ç”¨æ¥æŒ‡ä¸€ä¸ªé’±åŒ…ç¨‹åºï¼Œä¹Ÿå¯ä»¥æ˜¯ä¸€ä¸ªé’±åŒ…æ–‡ä»¶ã€‚é’±åŒ…ç¨‹åºåˆ›å»ºå…¬é’¥æ¥æ”¶æ¯”ç‰¹å¸ï¼Œå¹¶é€šè¿‡ç›¸åº”çš„ç§é’¥èŠ±è´¹è¿™äº›æ¯”ç‰¹å¸ã€‚é’±åŒ…æ–‡ä»¶ä¸ºé’±åŒ…ç¨‹åºä¿å­˜äº¤æ˜“ç›¸å…³çš„ç§é’¥å’Œå…¶ä»–ä¿¡æ¯ã€‚
 
 
 
-## Ç®°ü³ÌĞò
+## é’±åŒ…ç¨‹åº
 
-### È«Ç®°ü
+### å…¨é’±åŒ…
 
-### Ç©ÃûÇ®°ü
+### ç­¾åé’±åŒ…
 
-#### ÀëÏßÇ®°ü
+#### ç¦»çº¿é’±åŒ…
 
-#### Ó²¼şÇ®°ü
+#### ç¡¬ä»¶é’±åŒ…
 
-### ´¿·Ö²¼Ê½Ç®°ü
+### çº¯åˆ†å¸ƒå¼é’±åŒ…
 
-## Ç®°üÎÄ¼ş
-### Ë½Ô¿¸ñÊ½
-### ¹«Ô¿¸ñÊ½
+## é’±åŒ…æ–‡ä»¶
+### ç§é’¥æ ¼å¼
+### å…¬é’¥æ ¼å¼
 
 

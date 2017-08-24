@@ -1,9 +1,9 @@
-This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
+ï»¿This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
 
-[¶ÔÓ¦Ó¢ÎÄÎÄµµ](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_mining.md)
+[å¯¹åº”è‹±æ–‡æ–‡æ¡£](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_mining.md)
 
-# ÍÚ¿ó  
-ÔÝÎ´·­Òë
+# æŒ–çŸ¿  
+æš‚æœªç¿»è¯‘
 
 
 

@@ -1,94 +1,94 @@
-This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
+﻿This file is licensed under the [MIT License (MIT)](http://opensource.org/licenses/MIT) available on http://opensource.org/licenses/MIT.
 
-[��ӦӢ���ĵ�](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_contracts.md)
+[对应英文文档](https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/_includes/devdoc/guide_contracts.md)
 
-# ��Լ
-��Լ��ʹ��ȥ���ĵı��ر�ϵͳ��֤��ҵԼ���Ľ��ס����رҺ�Լ�ܹ����ٶ��ⲿ�������編Ժϵͳ�����������Դ˿��������ڽ��ڽ�������δ֪ʵ�彻��ķ��ա�
+# 合约
+合约是使用去中心的比特币系统保证商业约定的交易。比特币合约能够减少对外部机构（如法院系统）的依赖，以此可以显著在金融交易中与未知实体交涉的风险。
 
-���������½��У����������������ʹ�õĶ����Լ�����ں�Լ�����Ĳ�ֻ�ǽ��ף�����������֮������⣬���ʹ��һ�����½�����������֯������
+接下来的章节中，将会介绍现在正在使用的多个合约。由于合约处理的不只是交易，更是人与人之间的问题，因此使用一个故事将下面内容组织起来。
 
-����������ܵĺ�Լ�����⣬���кܶ������Ѿ�����ĺ�Լ������һЩ�����������ر�Wiki�ĺ�Լҳ�ˡ�
+除了下面介绍的合约类型外，还有很多其他已经提出的合约。其中一些被整理到比特币Wiki的合约页了。
 
-## ��֤���ٲ�
-�˿�Charlie����ϰ�Bob���ﹺ�������Ʒ���������ǻ������Σ���������ʹ�ú�Լ����֤Charlie���Եõ�������Ʒ����Bob���Եõ����Ļ��
+## 公证和仲裁
+顾客Charlie想从老板Bob这里购买意见商品，但是他们互不信任，所以他们使用合约来保证Charlie可以得到他的商品并且Bob可以得到他的货款。
 
-��һ���򵥵ĺ�Լ��������������charlie��Ҫ֧��һ�������ı��ر���Ϊ�������������ֻ�е�charlie��Bob��ǩ���������ɱ��ٴ�����ʱ�����ǿ��õģ���Ϊδ�����׵����룩������ζ��ֻ��Charlie�õ�������Ʒ��Bob���ܻ����Щ���رң�ͬʱCharlieҲ���ܼȵõ���Ʒ���ûظ��
+用一个简单的合约可以这样描述：charlie将要支付一定数量的比特币作为交易输出，而且只有当charlie和Bob都签名允许它可被再次消费时它才是可用的（作为未来交易的输入）。这意味着只有Charlie得到他的商品，Bob才能获得这些比特币；同时Charlie也不能既得到商品又拿回付款。
 
-�ڷ�����ִʱ�ú�Լ���Ѽ���ִ�У����Bob��Charlie�������ٲ���Alice�İ���������һ����֤��Լ��charlie�����������֧����һ�����׵�����������ֻ����3���е�2��ͬ��������Ϊδ�����׵����롣�������û���������⣬charlie����֧�����bobҲ�����õ�����緢���˳�ͻ��Alice�����ٲþ���˭���Եõ����
+在发生争执时该合约很难继续执行，因此Bob和Charlie引入了仲裁者Alice的帮助，创建一个公证合约。charlie将会把他货款支付到一个交易的输出，该输出只有在3人中的2人同意后才能作为未来交易的输入。现在如果没有其他问题，charlie可以支付货款，bob也可以拿到货款；如发生了冲突，Alice可以仲裁决定谁可以得到货款。
 
-Ϊ�˴���һ������ǩ�������룬������Ҫ�����Լ��Ĺ�Կ��Ȼ��Bob���������P2SH����ǩ���һ��ű���
+为了创建一个多重签名的输入，他们需要给出自己的公钥，然后Bob创建下面的P2SH多重签名兑换脚本：
 ```
 OP_2 [A's pubkey] [B's pubkey] [C's pubkey] OP_3 OP_CHECKMULTISIG
 ```
-���ѹ�Կѹջ�Ĳ�����û��д������
+（把公钥压栈的操作码没有写出）。
 
-OP\_2��OP\_3�ǰѶ�Ӧ������2��3ѹջ��OP\_2ָ��������ǩ����Ҫǩ��OP\_3ָ����3����Կ��δhash�ģ���Ҫ�ṩ������һ��2-of-3�Ķ���ǩ����Կ�ű������һ��ĳ���m-of-n��Կ�ű���m��ƥ��ǩ����Ҫ�����ٸ�����n����Ҫ�ṩ�Ĺ�Կ�ĸ�������
+OP\_2和OP\_3是把对应的数字2和3压栈。OP\_2指定有两个签名需要签署；OP\_3指定有3个公钥（未hash的）需要提供。这是一个2-of-3的多重签名公钥脚本，或更一般的称作m-of-n公钥脚本（m是匹配签名需要的最少个数，n是需要提供的公钥的个数）。
 
-Bobo�Ѷ��ֽű��ṩ��Charlie��charlie��Ҫ���ȷ�����Ĺ�Կ��Alice�Ĺ�Կ���Ѱ��������С�Ȼ��Ѷ��ֽű�hash�󴴽�һ��P2SH�һ��ű�Ȼ��ѻ���֧�����õ�ַ��Bob���������Ͽ����ý��ױ����ӣ��Ͱ���Ʒ������charlie��
+Bobo把兑现脚本提供给Charlie，charlie需要检查确认它的公钥和Alice的公钥都已包含在其中。然后把兑现脚本hash后创建一个P2SH兑换脚本然后把货款支付到该地址。Bob在区块脸上看到该交易被添加，就把商品交付给charlie。
 
-���ҵ����鷢���ˣ���Ʒ������Ĺ���������΢�𻵡�charlie��Ҫȫ���˿����Bob��Ϊ10%���˿�ȽϺ����������ҵ�Alice���������⡣Alice��charlie������Ҫ����Ƭ֤���Լ�һ��Bob��������charlie�����Ķһ���Լ�ĸ�����
+不幸的事情发生了，商品在运输的过程中有轻微损坏。charlie想要全额退款，但是Bob认为10%的退款比较合理。他们找到Alice解决这个问题。Alice从charlie那里索要了照片证据以及一份Bob创建并让charlie检查过的兑换合约的副本。
 
-ͨ���鿴֤�ݣ�Alice��Ϊ40%���˿��ǱȽϺ����ģ������������ǩ����һ��������Ľ��ף�һ��֧��60%�ı��رҵ�Bob�Ĺ�Կ����һ����ʣ��40%֧����charlie�Ĺ�Կ��
+通过查看证据，Alice认为40%的退款是比较合理的，因此它创建并签署了一份两输出的交易，一个支付60%的比特币到Bob的公钥，另一个把剩余40%支付到charlie的公钥。
 
-��ǩ���ű���Alice����������ǩ���ͺ�һ��δhash������Bob�����Ķһ��ű�������¶һ��ű�����������������Ľ���ͬʱ�ṩ��Bob��Charlie�������������е���һ�������԰��Լ���ǩ�����ӵ������ǩ���ű������������ס�
+在签名脚本中Alice添加了她的签名和和一份未hash的连在Bob创建的兑换脚本后面的新兑换脚本。它把这个不完整的交易同时提供给Bob和Charlie。他们两个人中的任一个都可以把自己的签名添加到下面的签名脚本中完成这个交易。
 ```
 OP_0 [A's signature] [B's or C's signature] [serialized redeem script]
 ```
-����ջǩ���Ͷһ��ű��Ĳ���������û�и�����OP\_0��Ϊ�˹��һ������ʵ��off-by-one����ı�ͨ���������ڼ����Կ��ǲ���ʡ�ԣ�ע�⣬ǩ���ű�һ��Ҫ���ճ��ֶһ��ű��Ĺ�Կ��ͬ��˳���ṩ������ϸ�ڲο�`OP_CHECKMULTISIG`����������
+（入栈签名和兑换脚本的操作码这里没有给出。OP\_0是为了规避一个早期实现off-by-one错误的变通方法，处于兼容性考虑不能省略）注意，签名脚本一定要按照出现兑换脚本的公钥相同的顺序提供，更多细节参考`OP_CHECKMULTISIG`的描述。）
 
-�����ױ��㲥�������У�ÿ���ڵ㶼��ͨ��ǩ���ű����charlie֮ǰ֧����P2SH�������֤�һ��ű���֮ǰ�ṩ�Ķһ��ű�hashһ�¡�Ȼ��ʹ������ǩ����Ϊ���룬ִ�жһ��ű����ٶ��һ��ű���Ч��������������ͻ�ֱ������Bob��Chlie��Ǯ�����г�Ϊ�������ֽ�
+当交易被广播到网络中，每个节点都会通过签名脚本检查charlie之前支付的P2SH输出，保证兑换脚本与之前提供的兑换脚本hash一致。然后使用两个签名作为输入，执行兑换脚本。假定兑换脚本有效，两个交易输出就会分别出现在Bob和Chlie的钱包当中成为可消费现金。
 
-���ǣ����Alice������ǩ����һ���������˶����ܽ��յķ�������������еı��رҶ������Լ���Bob��charlie����������һ���ٲ���ǩ��һ���µĽ��ף������еı��ر�ʹ����һ��2-of-3����ǩ���һ��ű�hash֧����ȥ���µĽ��׵��а����ڶ����ٲ��˵Ĺ�Կ�������ζ��Bob��Charlie����ҪΪ�ٲ��˿���Ͷ�����ǵ��ʽ��ġ�
+但是，如果Alice创建和签名了一个他们两人都不能接收的方案，比如把所有的比特币都给她自己，Bob和charlie可以重新找一个仲裁人签署一份新的交易，把所有的比特币使用另一个2-of-3多重签名兑换脚本hash支付出去，新的交易当中包含第二个仲裁人的公钥。这就意味着Bob和Charlie不需要为仲裁人可能投走他们的资金担心。
 
-��Դ��BitRated����ѭGNU AGPLЭ����վ��ʹ��html/Javascript�ṩ��һ������ǩ���ٲ÷���Ľӿڡ�
+资源：BitRated在遵循GNU AGPL协议网站上使用html/Javascript提供了一个多重签名仲裁服务的接口。
 
-## С��֧��ͨ��
-AliceΪBob����̳����ְ������ˡ�ÿ��������Bob��æ����̳�Ϸ���ʱ��Alice�����鷢�������Ƿ��й����Ի�����������Ϣ��Bob��������ΪAlice֧��нˮ�����AliceҪ��Bob��ÿ�������һ�����Ժ�Bob��������нˮ֧��������Bob˵���������У����ٱʵ�֧��������Ҫ��������ǧ�ϵĽ��׷ѣ����Alice��������ʹ��С��֧��ͨ����
+## 小额支付通道
+Alice为Bob的论坛做兼职发言审核。每次有人在Bob繁忙的论坛上发言时，Alice都会检查发言内容是否有攻击性或者是垃圾信息。Bob经常忘记为Alice支付薪水，因此Alice要求Bob在每次审核完一个发言后Bob都立即把薪水支付给她。Bob说，这样不行，数百笔的支付交易需要花费它上千聪的交易费，因此Alice建议他们使用小额支付通道。
 
-Bob��Alice��Ҫ���Ĺ�Կ��Ȼ�󴴽�2�����ס���һ������ʹ��2-of-2���ضһ�ǩ��ͨ��P2SH���֧��100�ϣ�����ǩ��ͬʱ��ҪAlice��Bob��ǩ������Ч������ծȯ��bond�����ס���������׹㲥������������Alice������ЩѺ�𣬽���bob�����������ʱ��Ϊ˽�У����㲥����Ȼ�󴴽��ڶ������ס�
+Bob想Alice索要她的公钥，然后创建2个交易。第一个交易使用2-of-2多重兑换签名通过P2SH输出支付100聪，多重签名同时需要Alice和Bob的签名才有效。这是债券（bond）交易。把这个交易广播到网络里是让Alice锁定这些押金，接着bob把这个交易暂时作为私有（不广播），然后创建第二个交易。
 
-�ڶ���������24Сʱ������ʱ��֮��ѵ�һ�����׵��������֧����Bob����һ���˻����ס�Bob�����Լ�ǩ������˻����ף�������Ҫ��������׽���Aliceǩ������������ͼ��ʾ��
+第二个交易在24小时的锁定时间之后把第一个交易的所有输出支付给Bob，是一个退还交易。Bob不能自己签署这个退还交易，他还需要把这个交易交给Alice签名，过程如下图所示：
 
 ![image](http://note.youdao.com/yws/public/resource/580887bc0d4654b83202bc1e47db9af9/xmlnote/5B0182C8DF1841BFA078865B36A4F52D/117530)
 
-Alice�������˻����׵�����ʱ���Ƿ���δ��24Сʱ֮�����û�������ǩ����������ǩ���ĸ������͸�Bob��Ȼ������Bob�����õ���ȫ���ף�������˻������Ƿ������ѵ�ծȯ���׵������Ȼ������ծȯ���׹㲥�������ϣ��Դ˱�֤Bob����ȵ�����ʱ���Ժ���ܻ�������ʽ�����Ϊֹ��Bob����һ�㽻�׷����⻹û���������⻨�ѣ���Ҳ������24Сʱ��㲥�˻�����ȡ�������ʽ�
+Alice检查这个退还交易的锁定时间是否是未来24小时之后，如果没有问题就签署它，并把签署后的副本发送给Bob。然后她从Bob那里拿到在全交易，并检查退还交易是否是消费的债券交易的输出。然后，她把债券交易广播到网络上，以此保证Bob必须等到过期时间以后才能花费这笔资金。迄今为止，Bob除了一点交易费用外还没有其他额外花费，他也可以在24小时候广播退还交易取回所有资金。
 
-���ڣ�Aliceÿ�����ֵ1�ϵı��رҵĹ�����������Ҫ��Bob������ǩ��һ���µ��˻����ס��°汾�Ľ��׽�1�ϵı��ر�֧����Alice��ʣ���99���˻���Bob���½��ײ�û������ʱ�䣬���ֻҪAliceԸ����������ʱǩ�𲢵õ��ñ�֧����ͨ��Alice��������ʹ�ý�����Ч����
+现在，Alice每做完价值1聪的比特币的工作，他都会要求Bob创建和签署一个新的退还交易。新版本的交易将1聪的比特币支付个Alice，剩余的99聪退还给Bob；新交易并没有锁定时间，因此只要Alice愿意她可以随时签署并得到该笔支付（通常Alice不会立即使该交易生效）。
 
-Alice��Bob�������-֧�����̣�֪��Alice�����һ��Ĺ�����ʱ�����������ڡ�Aliceǩ�����°汾���˻����ײ��㲥��ȥ���õ��Լ��ı��겢��ʣ���ʽ��˻���Bob���ڶ��쵱Alice�ٴο�ʼ����ʱ�����Ǿͻᴴ��һ���µ�С���ͨ����
+Alice和Bob这个工作-支付过程，知道Alice完成了一天的工作或时间锁即将超期。Alice签署最新版本的退还交易并广播出去，拿到自己的报酬并将剩余资金退还给Bob。第二天当Alice再次开始工作时，他们就会创建一个新的小额交易通道。
 
-���Alice��ʱ�䵽��ǰû�а����հ汾���׹㲥��ȥ��Bob�Ϳ��԰���ӵ�еĵ�һ���汾�Ľ��׹㲥���õ����е��ʽ�����С���������������С��֧����ԭ�����Alice��������ʱ�䵽��ǰ���߼���Сʱ��������нˮ�Ϳ��ܴ�ˮƯ�ˡ�
+如果Alice在时间到期前没有把最终版本交易广播出去，Bob就可以把他拥有的第一个版本的交易广播并得到所有的资金。这是小额交易渠道仅适用于小额支付的原因，如果Alice的网络在时间到期前离线几个小时，她所有薪水就可能打水漂了。
 
-��һ�����۵Ľ�������������С��֧������ʹ�õ���һ��ԭ�����ĳЩ�����ý������ܴ�����������֮�����ϵ��Alice��ʹʲô����Ҳ������Ҳ���԰�Bob��100��Ѻ��������
+上一节讨论的交易重塑是限制小额支付渠道使用的另一个原因。如果某些人利用交易重塑打破两个交易之间的联系，Alice即使什么工作也不做，也可以吧Bob的100聪押金锁定。
 
-���ڴ��֧�������׷���ֻռ�ܷ��ú�С�ı���������Ϊ�˱�֤֧����ȫ��������������㲥�������塣
+对于大额支付，交易费用只占总费用很小的比例，所以为了保证支付安全将多个交易立即广播更有意义。
 
-��Դ��bitcoinj java���ṩ��һ������������С��׵ĺ�����һ��ʵ�����ӣ��Լ�һ��ʹ��Apache ����֤�Ľ̡̳�
+资源：bitcoinj java库提供了一套完整的设置小额交易的函数、一个实现例子，以及一个使用Apache 许可证的教程。
 
-## ���Ͻ���
-Alice�ǳ���ע�Լ�����˽����֪���Լ���ÿ�ʽ��׶������ӵ��˹����������ϣ���˵�Bob��Charlie����֧����ʱ�����ǿ������׵�������Щ���ر�����ȡ����֧����ַ���տ����������֪�����ж�����
+## 联合交易
+Alice非常关注自己的隐私。她知道自己的每笔交易都被添加到了公共区块链上，因此当Bob和Charlie向她支付的时候他们可以轻易的最终这些比特币来获取她的支付地址、收款金额，甚至可能知道她有多少余额。
 
-Alice����һ���ﷸ����ֻ����������������˶��ٱ��ر��Լ�����ʣ����ٲ�Ҫ̫�����ԡ������ͨ���Լ������ϵ������������ʹ��AnonGirl���˺ŵ�¼��һ��IRC�����ҡ�
+Alice不是一个罪犯，她只是想对她曾经花费了多少比特币以及现在剩余多少不要太过明显。因此她通过自己电脑上的洋葱匿名服务使用AnonGirl的账号登录到一个IRC聊天室。
 
-���������л���Nemo��Meminem�����ǹ�ͬ�����˴�֮�佻��һ���ֱ��ر���ʹ������Χ���˲�֪���ĸ����׵ı��ر������ǵĳ��еġ�������������һ���������⣺˭���ȿ�ʼ������ʹ�ü�����İ����֧���أ����潫Ҫ���ܵ����Ͻ��׽�����򵥻������Ǵ���һ������ͬʱ�������е�֧����ȷ��û����͵�����˵ı��رҡ�
+在聊天室中还有Nemo和Meminem，他们共同决定彼此之间交换一部分比特币以使他们周围的人不知道哪个交易的比特币是他们的持有的。但是他们面临一个两难问题：谁首先开始向两个使用假名的陌生人支付呢？下面将要介绍的联合交易将问题简单化：他们创造一个交易同时包含所有的支出，确保没人能偷走他人的比特币。
 
 ![image](http://note.youdao.com/yws/public/resource/580887bc0d4654b83202bc1e47db9af9/xmlnote/5EEC2C2A92B24CC498AE0D6072C6A3E2/117635)
 
-����ÿ����ͨ���������ǵ�UTXOs�ҵ�һ��100�Ͻ��׵���ϡ�Ȼ������ÿ������һ���µĹ�Կ������ѡ����UTXOs��Ϣ�͹�Կhash����һ�������ߡ���������У�����AnonGirl�������ߣ�������һ�����װ����е�UTXOs֧��Ϊ��ȵ�3�ݣ������Ӧ�����ߵĹ�ԿHash��
+他们每个人通过查找他们的UTXOs找到一个100聪交易的组合。然后他们每人生成一个新的公钥，并把选定的UTXOs信息和公钥hash交给一个引导者。这个案例中，假设AnonGirl是引导者，她创造一个交易把所有的UTXOs支出为相等的3份，流入对应贡献者的公钥Hash。
 
-Ȼ��AnonGirlʹ��SIGHASH_ALL��ʶ����������������ǩ����֤û���ܹ��޸ġ�Ȼ��������ݲ���ǩ���Ľ��׽���Nemo��nemoǩ���Լ���������ٴ��ݸ�Neminem��neminmҲ��ͬ���Ĳ�����nemin�ѽ��׹Ⲩ��P2p���磬�����еı��رҶ���ϵ�ͬһ�����׵��С�
+然后AnonGirl使用SIGHASH_ALL标识把输入和输出都进行签名保证没人能够修改。然后他把这份部分签名的交易交给Nemo，nemo签名自己的输入后再传递给Neminem，neminm也做同样的操作。nemin把交易光波导P2p网络，把所有的比特币都混合到同一个交易当中。
 
-������ʾ����������������û���ܹ�ȷ֪˭ӵ���Ƿ�������������Ƕ�����ģ���Լ��Ļ��ѡ�
+如上所示，除了他们三人外没人能够确知谁拥有那份输出，所以他们都可以模糊自己的花费。
 
-����Bob��charlie��ͼͨ��������׷��Alice�Ľ��ף����Ǿͻᷢ��Nemo��Neminem�Ľ��ס����Alice�����������Ͻ��ף�Bob��charlie�ͱ���Ҫ�ӳɰ���ǧ���˵��в²��ĸ�������Alice���ġ�
+现在Bob或charlie试图通过区块链追踪Alice的交易，他们就会发现Nemo和Neminem的交易。如果Alice多做几次联合交易，Bob和charlie就必须要从成百上千个人当中猜测哪个交易是Alice做的。
 
-Alice�������ı��رҽ�����ʷ��Ȼ�������������ϣ����һ��ר�ŵ����Ա�ܹ���ϵ�����и�anongirl�������Ͻ��׵��ˣ����ܹ����������رҵ�ԭʼ��Դ��������֪������˾���Alice��������ĳ��ֻ����ʱ�鿴��������ʷ������£�Alice���ǿ����������ٵġ�
+Alice的完整的比特币交易历史依然保留在区块链上，如果一个专门的侦查员能够联系到所有跟anongirl进行联合交易的人，就能够发现她比特币的原始来源或许还能知道这个人就是Alice。但是在某人只是临时查看区块链历史的情况下，Alice还是可以隐匿行踪的。
 
-�������۵����Ͻ��׼�����Ҫ֧�������Ľ��׷��á������һ����ǹ��������Ͻ��ף������ڽ�Լ���׷��õ�ͬʱ������˽�ԡ�
+上面讨论的联合交易技术需要支付少量的交易费用。另外的一项技术是购买者联合交易，可以在节约交易费用的同时提升隐私性。
 
-anongirlһֱ����������ȴ�ֱ��������㶫���������������뻨�ѱ��رҵ��뷨ֱ������Ҳ����㶫���������Ǵ�����һ����������������ǿ����ڹ���ǰ�����ǵ���������һ�𣬰�����ֱ�ָ������ͬ���̼ҵĵ�ַ����ʱ��û���ܽ���������ֱ������ÿ�˵������ʲô�����ˡ�
+anongirl一直在聊天室里等待直到她想买点东西。她公布了她想花费比特币的想法直到有人也想买点东西，可能是从另外一个商人那里。这是他们可以在购买前把它们的输入结合在一起，把输出分别指定到不同的商家的地址，此时就没人能仅从区块链直到他们每人到底买的什么东西了。
 
-�������Ǳ����ͱ���Ҫ�����ǵĽ�����֧�����ã�anongirl������Э���߾Ͳ���Ҫ�ٻ��Ѷ���ķ����ˡ�������������ͨ����ϼ����˽��׵Ŀ�����ʡ�˴洢�����ǻ����Ի��Ѹ��ٵĽ��׷��ã�ÿ���ٶ����ʡ�������׷ѡ�
+由于他们本来就必须要在他们的交易中支付费用，anongirl和她的协作者就不需要再花费额外的费用了。但是由于他们通过组合减少了交易的开销节省了存储，他们还可以花费更少的交易费用，每人再额外节省少量交易费。
 
 
-��Դ��ȥ���Ļ����Ͻ��׵�һ������ʵ��ʱcoinmux������Apache����֤��
+资源：去中心化联合交易的一个优质实现时coinmux，基于Apache许可证。
