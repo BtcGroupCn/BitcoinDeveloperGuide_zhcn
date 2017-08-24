@@ -1,4 +1,4 @@
-﻿# Summary
+# Summary
 
 * [介绍](guide_intro.md)
 * [区块链](guide_block_chain_zhcn.md)

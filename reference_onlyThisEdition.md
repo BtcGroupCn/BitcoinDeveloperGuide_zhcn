@@ -1,4 +1,4 @@
-﻿
+
 
 # 参考资料
 1. [Bitcoin Developer Guide](https://bitcoin.org/en/developer-guide#block-chain)
