@@ -1,9 +1,9 @@
 # 比特币开发者指南\(中文版\)
 
 [Bitcoin Developer Guide]:https://bitcoin.org/en/developer-guide#block-chain-overview
-[点击查看gitbook版本]:(https://www.gitbook.com/book/vacing/bitcoindeveloperguide_zhcn/details)
+[查看gitbook版本]:https://www.gitbook.com/book/vacing/bitcoindeveloperguide_zhcn/details
 
-本指南是基于[比特币官方网站](https://bitcoin.org/en/)的[Bitcoin Developer Guide]（比特币开发者指南）翻译而来，已同步开源到gitbook[点击查看gitbook版本]。
+本指南是基于[比特币官方网站](https://bitcoin.org/en/)的[Bitcoin Developer Guide]（比特币开发者指南）翻译而来，已同步开源到gitbook[查看gitbook版本]。
 
 目前本指南正在翻译当中，尚未完成，有兴趣一起翻译或对区块链技术有兴趣的同学可以通过搜索加qq群：574770647，或点击[加群链接](https://jq.qq.com/?_wv=1027&k=54U989d)参与讨论。
 
